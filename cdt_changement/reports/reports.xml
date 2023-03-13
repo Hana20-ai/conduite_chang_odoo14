@@ -1,0 +1,113 @@
+
+<odoo>
+    <record id="report_partiesprenante" model="ir.actions.report">
+        <field name="name">Analyse des parties prenantes</field>
+        <field name="model">cdt.partieprenante</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cdt_changement.report_partiesprenante_view</field>
+        <field name="report_file">cdt_changement.report_partiesprenante</field>
+        <field name="binding_model_id" ref="model_cdt_partieprenante"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_partiesprenante_view">
+            <t t-call="web.basic_layout">
+               <h1> <CENTER> Analyse des parties prenantes </CENTER> </h1>
+		<br />
+		<br />
+               <h2> <CENTER> Matrice Pouvoir-Intérêt </CENTER> </h2>
+		<br />
+		<br />
+		<br />
+               <h5>
+                 
+                 <span>Nom du projet</span>
+                 <span>:</span>
+                 <span t-field="docs.projet"/>
+		 <br />
+		 <br />	
+		 <span>Chef de projet</span>
+                 <span>:</span>
+                 <span t-field="docs.projet.user_id"/> 
+		 <br />
+		 <br />
+		 <span>Client</span>
+                 <span>:</span>
+                 <span t-field="docs.projet.partner_id"/>
+  		 
+		 
+                 </h5>
+		<br />	
+               
+               <table class="center" style="border: 3px solid black !important; margin: 0px auto; width:100%;">
+               <tr>
+                  <td width="40%">Elevé</td>
+                  <td width="40%">
+                     <b>Garder informé</b>
+                     <t t-foreach="docs" t-as="o">
+                     <t t-if="o.pouvoir in ['a'] and o.interet in ['b']">
+                     <p>
+                        <span t-field="o.Id"/>
+                        <span>:</span>
+                        <span t-field="o.name"/>
+                     </p>
+                     </t>
+                     </t>
+                  </td>
+                  <td width="40%">
+                     <b>Acteur clé</b>
+                     <t t-foreach="docs" t-as="o">
+                     <t t-if="o.pouvoir in ['b'] and o.interet in ['b']">
+                     <p> 
+                        <span t-field="o.Id"/>
+                        <span>:</span>
+                        <span t-field="o.name"/>
+                     </p>
+                     </t>
+                     </t>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="40%">Faible</td>
+                  <td width="40%">
+                     <b>Effort minimal</b>
+                     <t t-foreach="docs" t-as="o">
+                     <t t-if="o.pouvoir in ['a'] and o.interet in ['a']">
+                     <p>
+                        <span t-field="o.Id"/>
+                        <span>:</span>
+                        <span t-field="o.name"/>
+                     </p>
+                     </t>
+                     </t>
+                  </td>
+                  <td width="40%">
+                    <b>Garder satisfait</b>
+                    <t t-foreach="docs" t-as="o">
+                    <t t-if="o.pouvoir in ['b'] and o.interet in ['a']">
+                    <p>
+                        <span t-field="o.Id"/>
+                        <span>:</span>
+                        <span t-field="o.name"/>
+                     </p>
+                     </t>
+                     </t>
+                  </td>
+                </tr>
+                <tr>
+                   <td width="40%"><p><b>Pouvoir</b><br /><b>Intérêt</b></p></td>
+                   <td width="40%"><p><br />Faible</p></td>
+                   <td width="40%"><p><br />Elevé</p></td>
+                </tr>
+                </table>
+            </t>
+    </template>
+
+
+   
+
+    
+
+
+</odoo>
+

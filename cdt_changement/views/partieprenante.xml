@@ -1,0 +1,211 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_partieprenante_tree">
+            <field name="name">vuepartieprenante</field>
+            <field name="model">cdt.partieprenante</field>
+            <field name="arch" type="xml"> 
+                <tree string="partie prenante tree">
+                        <field name="Id"/>
+                        <field name="name"/>
+			<field name="projet"/>	
+                        <field name="type"/>
+                        <field name="role"/>
+                        <field name="interet"/>
+                        <field name="pouvoir"/>
+                        <field name="strategie"/>
+                        <field name="contribution"/>
+                        <field name="attentes"/>
+                        <field name="action"/>
+			<field name="contact"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_partieprenante_form" model="ir.ui.view"> 
+            <field name="name">formpartieprenante</field>
+            <field name="model">cdt.partieprenante</field>
+            <field name="arch" type="xml">
+              <form>
+                  <header>
+                     <button name="Onchange_strategie" id="action_strategie" string="Strategie" class="btn-primary" type="object"/>
+                     <button name="action_Resistant" id="action_Resistant" string="Resistant" states = "i" class="btn-primary" type="object"/>
+                     <button name="action_Neutre" id="action_Neutre" string="Neutre" states = "r" class="btn-primary" type="object"/>
+                     <button name="action_Supporteur" id="action_Supporteur" string="Supporteur" states = "n" class="btn-primary" type="object"/>
+                     <button name="action_Leader" id="action_Leader" string="Leader" states = "s" class="btn-primary" type="object"/>
+                     <field name="state" widget="statusbar" statusbar_visible="i,r,n,s,l" />
+		    
+                  </header>
+
+		  	
+
+
+                 <sheet>
+                     <group string="Informations générales">
+                        <field name="Id" readonly="1"/>
+                        <field name="name"/>
+			<field name="projet"/>	
+                        <field name="type"/>
+                        <field name="role"/>
+                        <field name="interet"/>
+                        <field name="pouvoir"/>
+                        <field name="strategie"/>
+                        <field name="contribution"/>
+                        <field name="attentes"/>
+                        <field name="action"/>
+			<field name="contact"/>
+                        </group>
+                 </sheet>
+              </form>
+            </field>
+        </record>
+	
+	
+
+
+	<record model="ir.ui.view" id="partie_search">
+            <field name="name">cdt.partieprenante.search</field>
+            <field name="model">cdt.partieprenante</field>
+            <field name="arch" type="xml">
+                <search string="Parties prenantes">
+                    <field name="name" />
+                    <filter string="Inconscient" name="inconscient" domain="[('state','=','i')]"/>
+                    <filter string="Resistant" name="resistant" domain="[('state','=','r')]"/>
+                    <filter string="Neutre" name="neutre" domain="[('state','=','n')]"/>
+                    <filter string="Supporteur" name="supporteur" domain="[('state','=','s')]"/>
+                    <filter string="Leader" name="Leader" domain="[('state','=','l')]"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+
+	<!--matrice pouvoir interet -->
+	<record id="interet_pouvoir_graph" model="ir.ui.view" >
+            <field name="name">cdt.partieprenante.graph</field>
+            <field name="model">cdt.partieprenante</field>
+            <field name="arch" type="xml">
+                <graph string="Matrice Pouvoir-intérêt" sample="1">
+                    
+		    <field name="interet"/>
+		    <field name="pouvoir"/>
+		    
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pricipale">
+            <field name="name">Parties prenantes</field>
+            <field name="res_model">cdt.partieprenante</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Créer votre première partie prenante dans un projet!</p>
+            </field>
+        </record>
+
+
+        
+
+        <!-- Risque -->
+
+        <record model="ir.ui.view" id="view_risques_tree">
+            <field name="name">vuerisque</field>
+            <field name="model">cdt.risque</field>
+            <field name="arch" type="xml"> 
+                <tree string="Risque tree">
+			<field name="id"/>
+                        <field name="name"/>
+			<field name="projet"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="view_risques_form" model="ir.ui.view"> 
+            <field name="name">formrisque</field>
+            <field name="model">cdt.risque</field>
+            <field name="arch" type="xml">
+              <form>
+                 <sheet>
+                     <group string="Informations sur le risque">
+			<field name="id"/>
+                        <field name="name"/>
+			<field name="projet"/>
+                        </group>
+                 </sheet>
+              </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="risk_action">
+            <field name="name">Risques</field>
+            <field name="res_model">cdt.risque</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Solution -->
+
+        <record model="ir.ui.view" id="view_solutions_tree">
+            <field name="name">vuesolution</field>
+            <field name="model">cdt.solution</field>
+            <field name="arch" type="xml"> 
+                <tree string="Solution tree">
+                        <field name="id"/>
+                        <field name="name"/>
+			<field name="risque_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_solutions_form" model="ir.ui.view"> 
+            <field name="name">formsolution</field>
+            <field name="model">cdt.solution</field>
+            <field name="arch" type="xml">
+              <form>
+                 <sheet>
+                   <group string="Solution au risque">
+                         <field name="id"/>
+                         <field name="name"/>
+			 <field name="risque_id"/>
+                  </group>
+                 </sheet>
+              </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sol_action">
+            <field name="name">Solutions</field>
+            <field name="res_model">cdt.solution</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+         <!-- Top menu item -->
+        <menuitem id="cdt_partie_prenante_root"
+            name="Registre Partenaires"
+            sequence="10"/>
+
+        <menuitem id="partie_prenante_menu"
+            name="Parties prenantes"
+            parent="cdt_partie_prenante_root"
+	    action="action_pricipale"
+            sequence="10"/>
+	
+	<menuitem id="risksol_menu"
+            name="Risques ET Solutions"
+            parent="cdt_partie_prenante_root"
+            sequence="10"/>
+	
+	<menuitem id="risk_menu"
+            name="Risques"
+            parent="risksol_menu"
+	    action="risk_action"	
+            sequence="10"/>
+
+	<menuitem id="solution_menu"
+            name="Solutions"
+            parent="risksol_menu"
+	    action="sol_action"	
+            sequence="10"/>
+        
+
+   </data>
+</odoo>
